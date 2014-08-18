@@ -8,6 +8,8 @@
   %bcond_without context
 %endif
 
+%bcond_with python3
+
 Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
 Version: 1.51.0
@@ -37,6 +39,9 @@ BuildRequires: bzip2-libs
 BuildRequires: bzip2-devel
 BuildRequires: zlib-devel
 BuildRequires: python-devel
+%if %{with python3}
+BuildRequires: python3-devel
+%endif
 BuildRequires: libicu-devel
 BuildRequires: chrpath
 
@@ -151,6 +156,22 @@ functions and objects to Python, and vice versa, using no special
 tools -- just your C++ compiler.  This package contains run-time
 support for Boost Python Library.
 
+%if %{with python3}
+
+%package python3
+Summary: Run-Time component of boost python library for Python 3
+Group: System Environment/Libraries
+
+%description python3
+
+The Boost Python Library is a framework for interfacing Python and
+C++. It allows you to quickly and seamlessly expose C++ classes
+functions and objects to Python, and vice versa, using no special
+tools -- just your C++ compiler.  This package contains run-time
+support for Boost Python Library compiled for Python 3.
+
+%endif
+
 %package random
 Summary: Run-Time component of boost random library
 Group: System Environment/Libraries
@@ -248,6 +269,9 @@ Requires: boost-locale = %{version}-%{release}
 Requires: boost-math = %{version}-%{release}
 Requires: boost-program-options = %{version}-%{release}
 Requires: boost-python = %{version}-%{release}
+%if %{with python3}
+Requires: boost-python3 = %{version}-%{release}
+%endif
 Requires: boost-random = %{version}-%{release}
 Requires: boost-regex = %{version}-%{release}
 Requires: boost-serialization = %{version}-%{release}
@@ -258,6 +282,9 @@ Requires: boost-thread = %{version}-%{release}
 Requires: boost-timer = %{version}-%{release}
 Requires: boost-wave = %{version}-%{release}
 Provides: boost-python-devel = %{version}-%{release}
+%if %{with python3}
+Provides: boost-python3-devel = %{version}-%{release}
+%endif
 
 %description devel
 Headers and shared object symbolic links for the Boost C++ libraries.
@@ -315,9 +342,28 @@ a number of significant features and is now developed independently
 # At least python2_version needs to be a macro so that it's visible in
 # %%install as well.
 %global python2_version %(/usr/bin/python2 %{SOURCE1})
+%if %{with python3}
+%global python3_version %(/usr/bin/python3 %{SOURCE1})
+%global python3_abiflags %(/usr/bin/python3-config --abiflags)
+%endif
 
 %build
 : PYTHON2_VERSION=%{python2_version}
+%if %{with python3}
+: PYTHON3_VERSION=%{python3_version}
+: PYTHON3_ABIFLAGS=%{python3_abiflags}
+%endif
+
+cat >> ./tools/build/v2/user-config.jam << EOF
+# There are many strict aliasing warnings, and it's not feasible to go
+# through them all at this time.
+using gcc : : : <compileflags>-fno-strict-aliasing ;
+%if %{with python3}
+# This _adds_ extra python version.  It doesn't replace whatever
+# python 2.X is default on the system.
+using python : %{python3_version} : /usr/bin/python3 : /usr/include/python%{python3_version}%{python3_abiflags} ;
+%endif
+EOF
 
 ./bootstrap.sh --with-toolset=gcc --with-icu
 
@@ -460,6 +506,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %postun python -p /sbin/ldconfig
 
+%if %{with python3}
+%post python3 -p /sbin/ldconfig
+
+%postun python3 -p /sbin/ldconfig
+%endif
+
 %post random -p /sbin/ldconfig
 
 %postun random -p /sbin/ldconfig
@@ -558,6 +610,14 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE_1_0.txt
 %{_libdir}/libboost_python.so.%{sonamever}
 %{_libdir}/libboost_python-mt.so.%{sonamever}
+
+%if %{with python3}
+%files python3
+%defattr(-, root, root, -)
+%doc LICENSE_1_0.txt
+%{_libdir}/libboost_python3.so.%{sonamever}
+%{_libdir}/libboost_python3-mt.so.%{sonamever}
+%endif
 
 %files random
 %defattr(-, root, root, -)
