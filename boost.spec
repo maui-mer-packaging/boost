@@ -12,25 +12,83 @@
 
 Name: boost
 Summary: The free peer-reviewed portable C++ source libraries
-Version: 1.51.0
+Version: 1.55.0
 Release: 1
 License: Boost and MIT and Python
 
-%define toplev_dirname %{name}_1_51_0
+%define toplev_dirname %{name}_1_55_0
 URL: http://www.boost.org
 Group: System/Libraries
-Source0: boost_1_51_0.tar.bz2
+Source0: boost_1_55_0.tar.bz2
 Source1: ver.py
 Source2: libboost_thread-mt.so
 
-# Patches from opensuse
-Patch0: boost-no_segfault_in_Regex_filter.patch
-Patch1: boost-no_type_punning.patch
-Patch2: boost-strict_aliasing.patch
-Patch3: boost-thread.patch
-Patch4: boost-use_std_xml_catalog.patch
-Patch5: 200-cstdint_missing_include.patch
-Patch6: boost-1.51.0-fix-cstdint.patch
+# https://svn.boost.org/trac/boost/ticket/6150
+Patch0: boost-1.50.0-fix-non-utf8-files.patch
+
+# Add a manual page for bjam, based on the on-line documentation:
+# http://www.boost.org/boost-build2/doc/html/bbv2/overview.html
+Patch1: boost-1.48.0-add-bjam-man-page.patch
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=828856
+# https://bugzilla.redhat.com/show_bug.cgi?id=828857
+Patch2: boost-1.50.0-pool.patch
+
+# https://svn.boost.org/trac/boost/ticket/8844
+Patch3: boost-1.54.0-bind-static_assert.patch
+
+# https://svn.boost.org/trac/boost/ticket/8847
+Patch4: boost-1.54.0-concept-unused_typedef.patch
+
+# https://svn.boost.org/trac/boost/ticket/5637
+Patch5: boost-1.54.0-mpl-print.patch
+
+# https://svn.boost.org/trac/boost/ticket/8859
+Patch6: boost-1.54.0-static_warning-unused_typedef.patch
+
+# https://svn.boost.org/trac/boost/ticket/8853
+Patch7: boost-1.54.0-tuple-unused_typedef.patch
+
+# https://svn.boost.org/trac/boost/ticket/8854
+Patch8: boost-1.54.0-random-unused_typedef.patch
+
+# https://svn.boost.org/trac/boost/ticket/8856
+Patch9: boost-1.54.0-date_time-unused_typedef.patch
+Patch10: boost-1.54.0-date_time-unused_typedef-2.patch
+
+# https://svn.boost.org/trac/boost/ticket/8870
+Patch11: boost-1.54.0-spirit-unused_typedef.patch
+Patch12: boost-1.54.0-spirit-unused_typedef-2.patch
+
+# https://svn.boost.org/trac/boost/ticket/8871
+Patch13: boost-1.54.0-numeric-unused_typedef.patch
+
+# https://svn.boost.org/trac/boost/ticket/8878
+Patch14: boost-1.54.0-locale-unused_typedef.patch
+
+# https://svn.boost.org/trac/boost/ticket/8879
+Patch15: boost-1.54.0-property_tree-unused_typedef.patch
+
+# https://svn.boost.org/trac/boost/ticket/8888
+Patch16: boost-1.54.0-python-unused_typedef.patch
+
+# https://svn.boost.org/trac/boost/ticket/9038
+Patch17: boost-1.54.0-pool-test_linking.patch
+
+# This was already fixed upstream, so no tracking bug.
+Patch18: boost-1.54.0-pool-max_chunks_shadow.patch
+
+# https://svn.boost.org/trac/boost/ticket/8725
+Patch19: boost-1.55.0-program_options-class_attribute.patch
+
+# Fixed upstream on Oct 4 00:26:49 2013.
+Patch20: boost-1.55.0-archive-init_order.patch
+
+# https://github.com/boostorg/xpressive/pull/1
+Patch21: boost-1.55.0-xpressive-unused_typedefs.patch
+
+# Fixed upstream on Aug 20 05:11:14 2013.
+Patch22: boost-1.55.0-spirit-unused_typedefs.patch
 
 %define sonamever %{version}
 
@@ -60,6 +118,17 @@ libraries have already been included in the C++ 2011 standard and
 others have been proposed to the C++ Standards Committee for inclusion
 in future standards.)
 
+%package atomic
+Summary: Run-Time component of boost atomic library
+Group: System Environment/Libraries
+
+%description atomic
+
+Run-Time support for Boost.Atomic, a library that provides atomic data
+types and operations on these data types, as well as memory ordering
+constraints required for coordinating multiple threads through atomic
+variables.
+
 %package chrono
 Summary: Run-Time component of boost chrono library
 Group: System Environment/Libraries
@@ -76,6 +145,16 @@ Group: System Environment/Libraries
 %description context
 
 Run-Time support for Boost Context
+
+%package coroutine
+Summary: Run-Time component of boost coroutine library
+Group: System Environment/Libraries
+
+%description coroutine
+Run-Time support for Boost.Coroutine, a library that provides
+generalized subroutines which allow multiple entry points for
+suspending and resuming execution.
+
 %endif
 
 %package date-time
@@ -124,6 +203,16 @@ Group: System Environment/Libraries
 
 Run-Time support for Boost.Locale, a set of localization and Unicode
 handling tools.
+
+%package log
+Summary: Run-Time component of boost logging library
+Group: System Environment/Libraries
+
+%description log
+
+Boost.Log library aims to make logging significantly easier for the
+application developer.  It provides a wide range of out-of-the-box
+tools along with public interfaces for extending the library.
 
 %package math
 Summary: Math functions for boost TR1 library
@@ -260,12 +349,14 @@ Group: Development/Libraries
 Requires: boost-chrono = %{version}-%{release}
 %if %{with context}
 Requires: boost-context = %{version}-%{release}
+Requires: boost-coroutine = %{version}-%{release}
 %endif
 Requires: boost-date-time = %{version}-%{release}
 Requires: boost-filesystem = %{version}-%{release}
 Requires: boost-graph = %{version}-%{release}
 Requires: boost-iostreams = %{version}-%{release}
 Requires: boost-locale = %{version}-%{release}
+Requires: boost-log = %{version}-%{release}
 Requires: boost-math = %{version}-%{release}
 Requires: boost-program-options = %{version}-%{release}
 Requires: boost-python = %{version}-%{release}
@@ -331,13 +422,29 @@ a number of significant features and is now developed independently
 
 %prep
 %setup -q -n %{toplev_dirname}
-%patch0 -p0
-%patch1 -p0
+%patch0 -p1
+%patch1 -p1
 %patch2 -p0
-%patch3 -p0
-%patch4 -p0
-%patch5 -p1
-%patch6 -p0
+%patch3 -p1
+%patch4 -p1
+%patch5 -p0
+%patch6 -p1
+%patch7 -p0
+%patch8 -p0
+%patch9 -p0
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
 
 # At least python2_version needs to be a macro so that it's visible in
 # %%install as well.
@@ -383,7 +490,7 @@ echo ============================= build serial ==================
 ./b2 -d+2 -q %{?_smp_mflags} --layout=tagged \
 	--without-mpi --without-graph_parallel --build-dir=serial \
 %if !%{with context}
-	--without-context \
+	--without-context --without-coroutine \
 %endif
 	variant=release threading=single,multi debug-symbols=on pch=off \
 	python=%{python2_version} stage
@@ -405,7 +512,7 @@ echo ============================= install serial ==================
 ./b2 -d+2 -q %{?_smp_mflags} --layout=tagged \
 	--without-mpi --without-graph_parallel --build-dir=serial \
 %if !%{with context}
-	--without-context \
+	--without-context --without-coroutine \
 %endif
 	--prefix=$RPM_BUILD_ROOT%{_prefix} \
 	--libdir=$RPM_BUILD_ROOT%{_libdir} \
@@ -464,6 +571,10 @@ rm -rf $RPM_BUILD_ROOT
 # user after the relevant environment module has been loaded.
 # rpmlint will report that as errors, but it is fine.
 
+%post atomic -p /sbin/ldconfig
+
+%postun atomic -p /sbin/ldconfig
+
 %post chrono -p /sbin/ldconfig
 
 %postun chrono -p /sbin/ldconfig
@@ -472,6 +583,10 @@ rm -rf $RPM_BUILD_ROOT
 %post context -p /sbin/ldconfig
 
 %postun context -p /sbin/ldconfig
+
+%post coroutine -p /sbin/ldconfig
+
+%postun coroutine -p /sbin/ldconfig
 %endif
 
 %post date-time -p /sbin/ldconfig
@@ -493,6 +608,10 @@ rm -rf $RPM_BUILD_ROOT
 %post locale -p /sbin/ldconfig
 
 %postun locale -p /sbin/ldconfig
+
+%post log -p /sbin/ldconfig
+
+%postun log -p /sbin/ldconfig
 
 %post math -p /sbin/ldconfig
 
@@ -550,6 +669,11 @@ rm -rf $RPM_BUILD_ROOT
 
 
 
+%files atomic
+%defattr(-, root, root, -)
+%doc LICENSE_1_0.txt
+%{_libdir}/libboost_atomic-mt.so.%{sonamever}
+
 %files chrono
 %defattr(-, root, root, -)
 %doc LICENSE_1_0.txt
@@ -561,6 +685,12 @@ rm -rf $RPM_BUILD_ROOT
 %doc LICENSE_1_0.txt
 %{_libdir}/libboost_context.so.%{sonamever}
 %{_libdir}/libboost_context-mt.so.%{sonamever}
+
+%files coroutine
+%defattr(-, root, root, -)
+%doc LICENSE_1_0.txt
+%{_libdir}/libboost_coroutine.so.%{sonamever}
+%{_libdir}/libboost_coroutine-mt.so.%{sonamever}
 %endif
 
 %files date-time
@@ -588,6 +718,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root, -)
 %doc LICENSE_1_0.txt
 %{_libdir}/libboost_locale*.so.%{sonamever}
+
+%files log
+%defattr(-, root, root, -)
+%doc LICENSE_1_0.txt
+%{_libdir}/libboost_log.so.%{sonamever}
+%{_libdir}/libboost_log-mt.so.%{sonamever}
+%{_libdir}/libboost_log_setup.so.%{sonamever}
+%{_libdir}/libboost_log_setup-mt.so.%{sonamever}
 
 %files math
 %defattr(-, root, root, -)
@@ -684,4 +822,5 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-, root, root, -)
 %doc LICENSE_1_0.txt
 %{_bindir}/bjam
+%{_mandir}/man1/bjam.1*
 
