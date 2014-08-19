@@ -22,6 +22,7 @@ Group: System/Libraries
 Source0: boost_1_55_0.tar.bz2
 Source1: ver.py
 Source2: libboost_thread-mt.so
+Source101: boost-rpmlintrc
 
 # https://svn.boost.org/trac/boost/ticket/6150
 Patch0: boost-1.50.0-fix-non-utf8-files.patch
