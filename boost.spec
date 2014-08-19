@@ -559,6 +559,9 @@ done
 rm -f tmp-doc-directories
 %{__install} -p -m 644 -t $DOCPATH LICENSE_1_0.txt index.htm index.html
 
+# Resolve spurious-executable-perm rpmlint error
+find %{buildroot} -type f -name "*.hpp" -exec chmod 644 {} \;
+
 %fdupes %{buildroot}/
 %fdupes %{buildroot}/%{_libdir}/
 %fdupes %{buildroot}/%{_datadir}/
