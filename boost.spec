@@ -120,7 +120,7 @@ in future standards.)
 
 %package atomic
 Summary: Run-Time component of boost atomic library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description atomic
 
@@ -131,7 +131,7 @@ variables.
 
 %package chrono
 Summary: Run-Time component of boost chrono library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description chrono
 
@@ -140,7 +140,7 @@ Run-Time support for Boost.Chrono, a set of useful time utilities.
 %if %{with context}
 %package context
 Summary: Run-Time component of boost context library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description context
 
@@ -148,7 +148,7 @@ Run-Time support for Boost Context
 
 %package coroutine
 Summary: Run-Time component of boost coroutine library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description coroutine
 Run-Time support for Boost.Coroutine, a library that provides
@@ -159,7 +159,7 @@ suspending and resuming execution.
 
 %package date-time
 Summary: Run-Time component of boost date-time library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description date-time
 
@@ -168,7 +168,7 @@ on generic programming concepts.
 
 %package filesystem
 Summary: Run-Time component of boost filesystem library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description filesystem
 
@@ -178,7 +178,7 @@ directories.
 
 %package graph
 Summary: Run-Time component of boost graph library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description graph
 
@@ -188,7 +188,7 @@ Library (STL).
 
 %package iostreams
 Summary: Run-Time component of boost iostreams library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description iostreams
 
@@ -197,7 +197,7 @@ stream buffers and i/o filters.
 
 %package locale
 Summary: Run-Time component of boost locale library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description locale
 
@@ -206,7 +206,7 @@ handling tools.
 
 %package log
 Summary: Run-Time component of boost logging library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description log
 
@@ -216,7 +216,7 @@ tools along with public interfaces for extending the library.
 
 %package math
 Summary: Math functions for boost TR1 library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description math
 
@@ -225,7 +225,7 @@ portion of Boost.TR1.
 
 %package program-options
 Summary:  Run-Time component of boost program_options library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description program-options
 
@@ -235,7 +235,7 @@ conventional methods such as command line and configuration file.
 
 %package python
 Summary: Run-Time component of boost python library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description python
 
@@ -249,7 +249,7 @@ support for Boost Python Library.
 
 %package python3
 Summary: Run-Time component of boost python library for Python 3
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description python3
 
@@ -263,7 +263,7 @@ support for Boost Python Library compiled for Python 3.
 
 %package random
 Summary: Run-Time component of boost random library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description random
 
@@ -271,7 +271,7 @@ Run-Time support for boost random library.
 
 %package regex
 Summary: Run-Time component of boost regular expression library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description regex
 
@@ -279,7 +279,7 @@ Run-Time support for boost regular expression library.
 
 %package serialization
 Summary: Run-Time component of boost serialization library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description serialization
 
@@ -287,7 +287,7 @@ Run-Time support for serialization for persistence and marshaling.
 
 %package signals
 Summary: Run-Time component of boost signals and slots library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description signals
 
@@ -295,7 +295,7 @@ Run-Time support for managed signals & slots callback implementation.
 
 %package system
 Summary: Run-Time component of boost system support library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description system
 
@@ -305,7 +305,7 @@ library.
 
 %package test
 Summary: Run-Time component of boost test library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description test
 
@@ -314,7 +314,7 @@ program execution monitoring.
 
 %package thread
 Summary: Run-Time component of boost thread library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description thread
 
@@ -325,7 +325,7 @@ data specific to individual threads.
 
 %package timer
 Summary: Run-Time component of boost timer library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description timer
 
@@ -335,7 +335,7 @@ with as little as one #include and one additional line of code.
 
 %package wave
 Summary: Run-Time component of boost C99/C++ pre-processing library
-Group: System Environment/Libraries
+Group: System/Libraries
 
 %description wave
 

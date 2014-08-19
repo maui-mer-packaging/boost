@@ -1,3 +1,6 @@
+* Tue Aug 19 2014 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com> - 1.55.0
+- Fix sub-packages group
+
 * Mon Aug 18 2014 Pier Luigi Fiorini <pierluigi.fiorini@gmail.com> - 1.55.0
 - Update to 1.55.0
 - Patches from Fedora
